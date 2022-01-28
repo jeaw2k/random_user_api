@@ -2,6 +2,7 @@ import './RandomUser.css';
 import Dob from './Dob';
 import Gender from './Gender';
 import Email from './Email';
+import Nat from './Nat';
 
 const RandomUser = ({ userData }) => {
     return (
@@ -12,6 +13,7 @@ const RandomUser = ({ userData }) => {
                 <Gender gender={userData.gender}/>
                 <Email email={userData.email}/>
                 <Dob dob={userData.dob}/>
+                <Nat nat={userData.nat}/>
             </div>
 
         </div>
