@@ -20,4 +20,5 @@ const RandomUser = ({ userData }) => {
     )
 };
 
+
 export default RandomUser;
