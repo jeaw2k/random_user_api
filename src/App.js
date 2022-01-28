@@ -6,7 +6,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
   // const [nationality, setNationality] = useState("");
-  // const [gender, setGender] = useState(" "); Міша, оці константи - гавно. хз нахера вони тут. вони ніде не юзаються
+  // const [gender, setGender] = useState(" "); оці константи - гавно. хз нахера вони тут. вони ніде не юзаються
 
   useEffect(() => {
     (async () => {
