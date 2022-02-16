@@ -5,7 +5,6 @@ import RandomUser from "./RandomUser";
 function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
-  // const testBtn = document.querySelector('#testBtn');
 
   useEffect(() => {
     (async () => {
@@ -45,31 +44,32 @@ function App() {
   };
 
   function Filter() {
-    // const [nationality, setNationality] = useState("");
-    // const [gender, setGender] = useState("");
+    const [nationality, setNationality] = useState("");
+    const [gender, setGender] = useState("");
 
-    const filterByNationality = (event) => {
-      const value = event.target.value;
-      const filterByNationality = allUsers.filter(
-        (user) => user.nat === value && value !== ""
-      );
-      setUsers(filterByNationality);
-    };
-    const filterByGender = (event) => {
-      const value = event.target.value;
-      const filterByGender = allUsers.filter(
-        (user) => user.gender === value && value !== ""
-      );
-      setUsers(filterByGender);
-    };
+    // const filterCards = (event) => {
+    //   const value = event.target.value.toLowerCase();
+    //   const filteredUsers = allUsers.filter((user) =>
+    //     `${user.name.first} ${user.name.last}`.toLowerCase().includes(value)
+    //   );
+    //   setUsers(filteredUsers);
+    // };
+    // const filterByNationality = (event) => {
+    //   const value = event.target.value;
+    //   const filterByNationality = allUsers.filter(
+    //     (user) => user.nat === value && value !== ""
+    //   );
+    //   setUsers(filterByNationality);
+    // };
+    // const filterByGender = (event) => {
+    //   const value = event.target.value;
+    //   const filterByGender = allUsers.filter(
+    //     (user) => user.gender === value && value !== ""
+    //   );
+    //   setUsers(filterByGender);
+    // };
   }
 
-  // document.addEventListener("DOMContentLoaded", function (){
-    
-
-
-  // })
-  
   console.log(allUsers);
   return (
     <div className="App">
@@ -80,7 +80,7 @@ function App() {
         placeholder="Поиск..."
       />
 
-      <button type="button" id="testBtn" onClick="Filter">
+      <button type="button" id="testBtn" onClick={Filter}>
         Apply
       </button>
 
@@ -113,7 +113,7 @@ function App() {
         <option value="TR"> Turkey </option>
         <option value="US"> USA </option>
       </select>
-      
+
       <div className="cards-container">
         {users.map((user, index) => (
           <RandomUser key={index} userData={user} />
