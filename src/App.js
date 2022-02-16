@@ -1,26 +1,39 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import RandomUser from "./RandomUser";
+import "./Button.css"
+// import "./Button.js";
 
+// global function with users data
 function App() {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      let userData;
-      try {
-        const response = await fetch("https://randomuser.me/api/?results=15");
-        userData = await response.json();
-      } catch (error) {
-        console.log(error);
-        userData = [];
-      }
+  const [nationality, setNationality] = useState("");
+  const [gender, setGender] = useState("");
+
+  const fetchUsers = async (params = {}) => {
+    const requestParams = {
+      results: "15", // you can choose any number of users. I choose 15, you can even 100
+      ...params,
+    };
+    try {
+      // randomuser.me api with random users and random info about users
+      const response = await fetch(
+        "https://randomuser.me/api?" + new URLSearchParams(requestParams)
+      );
+      const userData = await response.json();
       setAllUsers(userData.results);
       setUsers(userData.results);
-    })();
-  }, []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  // search and filter users by Name
   const filterCards = (event) => {
     const value = event.target.value.toLowerCase();
     const filteredUsers = allUsers.filter((user) =>
@@ -28,46 +41,22 @@ function App() {
     );
     setUsers(filteredUsers);
   };
+  // filter by Nationality
   const filterByNationality = (event) => {
     const value = event.target.value;
-    const filterByNationality = allUsers.filter(
-      (user) => user.nat === value && value !== ""
-    );
-    setUsers(filterByNationality);
+    setNationality(value);
   };
+  // filter by Gender (male,female or both)
   const filterByGender = (event) => {
     const value = event.target.value;
-    const filterByGender = allUsers.filter(
-      (user) => user.gender === value && value !== ""
-    );
-    setUsers(filterByGender);
+    setGender(value);
   };
-
+  // global Filter by gender and nat wich uses in button Apply
   function Filter() {
-    const [nationality, setNationality] = useState("");
-    const [gender, setGender] = useState("");
-
-    // const filterCards = (event) => {
-    //   const value = event.target.value.toLowerCase();
-    //   const filteredUsers = allUsers.filter((user) =>
-    //     `${user.name.first} ${user.name.last}`.toLowerCase().includes(value)
-    //   );
-    //   setUsers(filteredUsers);
-    // };
-    // const filterByNationality = (event) => {
-    //   const value = event.target.value;
-    //   const filterByNationality = allUsers.filter(
-    //     (user) => user.nat === value && value !== ""
-    //   );
-    //   setUsers(filterByNationality);
-    // };
-    // const filterByGender = (event) => {
-    //   const value = event.target.value;
-    //   const filterByGender = allUsers.filter(
-    //     (user) => user.gender === value && value !== ""
-    //   );
-    //   setUsers(filterByGender);
-    // };
+    fetchUsers({
+      gender: gender,
+      nat: nationality,
+    });
   }
 
   console.log(allUsers);
@@ -80,39 +69,47 @@ function App() {
         placeholder="Поиск..."
       />
 
-      <button type="button" id="testBtn" onClick={Filter}>
-        Apply
+      <button onClick={Filter} class="btn-liquid">
+        <span class="inner">Apply</span>
       </button>
 
-      <p>Gender</p>
-      <select onChange={(e) => filterByGender(e)}>
-        {" "}
-        <option value="male"> Male </option>
-        <option value="female"> Female </option>
-        <option value>All</option> {/*idk how to show all genders */}
-      </select>
-      <p>Nationality</p>
+      {/* <button className="apply" onClick={Filter}>
+        Apply
+      </button> */}
 
-      <select onChange={(e) => filterByNationality(e)}>
-        {" "}
-        <option value="AU"> Australia </option>
-        <option value="BR"> Brazil </option>
-        <option value="CA"> Canada </option>
-        <option value="CH"> Switzerland </option>
-        <option value="DE"> Germany </option>
-        <option value="DK"> Denmark </option>
-        <option value="ES"> Spain </option>
-        <option value="FI"> Finland </option>
-        <option value="FR"> France </option>
-        <option value="GB"> United Kingdom </option>
-        <option value="IE"> Ireland </option>
-        <option value="IR"> Iran </option>
-        <option value="NO"> Norway </option>
-        <option value="NL"> Netherlands </option>
-        <option value="NZ"> New Zealand </option>
-        <option value="TR"> Turkey </option>
-        <option value="US"> USA </option>
-      </select>
+      <p className="gender">
+        Gender --
+        <select onChange={(e) => filterByGender(e)}>
+          {" "}
+          <option value="male"> Male </option>
+          <option value="female"> Female </option>
+          <option value>All</option> {/*idk how to show all genders */}
+        </select>{" "}
+      </p>
+      <p className="nat">
+        Nationality --
+        {/* select by Nationality */}
+        <select onChange={(e) => filterByNationality(e)}>
+          {" "}
+          <option value="AU"> Australia </option>
+          <option value="BR"> Brazil </option>
+          <option value="CA"> Canada </option>
+          <option value="CH"> Switzerland </option>
+          <option value="DE"> Germany </option>
+          <option value="DK"> Denmark </option>
+          <option value="ES"> Spain </option>
+          <option value="FI"> Finland </option>
+          <option value="FR"> France </option>
+          <option value="GB"> United Kingdom </option>
+          <option value="IE"> Ireland </option>
+          <option value="IR"> Iran </option>
+          <option value="NO"> Norway </option>
+          <option value="NL"> Netherlands </option>
+          <option value="NZ"> New Zealand </option>
+          <option value="TR"> Turkey </option>
+          <option value="US"> USA </option>
+        </select>{" "}
+      </p>
 
       <div className="cards-container">
         {users.map((user, index) => (
