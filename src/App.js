@@ -76,6 +76,7 @@ function App() {
       {/* <button className="apply" onClick={Filter}>
         Apply
       </button> */}
+      
 
       <p className="gender">
         Gender --
