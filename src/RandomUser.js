@@ -6,7 +6,7 @@ import Nat from './Nat';
 
 const RandomUser = ({ userData }) => {
     return (
-        <div className="card">
+        <div className={`${userData.nat=="AU" && "card_rotate"} card`}>
             <div className="card__image"><img src={userData.picture.large}/></div>
             <div className="card__title">{userData.name.first} {userData.name.last}</div>
             <div className="card__body">

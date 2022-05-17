@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import RandomUser from "./RandomUser";
-import "./Button.css"
+import "./Button.css";
+import { listOfNationality } from "./Consts";
 // import "./Button.js";
 
 // global function with users data
@@ -11,6 +12,7 @@ function App() {
 
   const [nationality, setNationality] = useState("");
   const [gender, setGender] = useState("");
+
 
   const fetchUsers = async (params = {}) => {
     const requestParams = {
@@ -31,7 +33,10 @@ function App() {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers({
+      gender: localStorage.gender,
+      nat: localStorage.nationality,
+  });
   }, []);
   // search and filter users by Name
   const filterCards = (event) => {
@@ -45,11 +50,13 @@ function App() {
   const filterByNationality = (event) => {
     const value = event.target.value;
     setNationality(value);
+    localStorage.setItem("nationality", value);
   };
   // filter by Gender (male,female or both)
   const filterByGender = (event) => {
     const value = event.target.value;
     setGender(value);
+    localStorage.setItem("gender", value);
   };
   // global Filter by gender and nat wich uses in button Apply
   function Filter() {
@@ -59,7 +66,7 @@ function App() {
     });
   }
 
-  console.log(allUsers);
+  console.log(localStorage);
   return (
     <div className="App">
       <h1>Рандомные юзеры</h1>
@@ -73,43 +80,25 @@ function App() {
         <span class="inner">Apply</span>
       </button>
 
-      {/* <button className="apply" onClick={Filter}>
-        Apply
-      </button> */}
-      
-
       <p className="gender">
         Gender --
-        <select onChange={(e) => filterByGender(e)}>
-          {" "}
+        <select value={localStorage?.gender} onChange={(e) => filterByGender(e)}>
           <option value="male"> Male </option>
           <option value="female"> Female </option>
           <option value>All</option> {/*idk how to show all genders */}
-        </select>{" "}
+        </select>
       </p>
       <p className="nat">
         Nationality --
         {/* select by Nationality */}
-        <select onChange={(e) => filterByNationality(e)}>
-          {" "}
-          <option value="AU"> Australia </option>
-          <option value="BR"> Brazil </option>
-          <option value="CA"> Canada </option>
-          <option value="CH"> Switzerland </option>
-          <option value="DE"> Germany </option>
-          <option value="DK"> Denmark </option>
-          <option value="ES"> Spain </option>
-          <option value="FI"> Finland </option>
-          <option value="FR"> France </option>
-          <option value="GB"> United Kingdom </option>
-          <option value="IE"> Ireland </option>
-          <option value="IR"> Iran </option>
-          <option value="NO"> Norway </option>
-          <option value="NL"> Netherlands </option>
-          <option value="NZ"> New Zealand </option>
-          <option value="TR"> Turkey </option>
-          <option value="US"> USA </option>
-        </select>{" "}
+        <select value={localStorage?.nationality} onChange={(e) => filterByNationality(e)}>
+          {listOfNationality.map((option) => (
+            <option value={option.value}>
+              {option.label}
+            </option>
+          ))}
+          ;
+        </select>
       </p>
 
       <div className="cards-container">
