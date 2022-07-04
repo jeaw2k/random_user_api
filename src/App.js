@@ -3,7 +3,6 @@ import "./App.css";
 import RandomUser from "./RandomUser";
 import "./Button.css";
 import { listOfNationality } from "./Consts";
-// import "./Button.js";
 
 // global function with users data
 function App() {
@@ -85,7 +84,7 @@ function App() {
         <select value={localStorage?.gender} onChange={(e) => filterByGender(e)}>
           <option value="male"> Male </option>
           <option value="female"> Female </option>
-          <option value>All</option> {/*idk how to show all genders */}
+          <option value>All</option>
         </select>
       </p>
       <p className="nat">
