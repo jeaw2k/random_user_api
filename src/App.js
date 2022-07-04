@@ -65,7 +65,6 @@ function App() {
     });
   }
 
-  console.log(localStorage);
   return (
     <div className="App">
       <h1>Рандомные юзеры</h1>
